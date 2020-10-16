@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "uki.h"
 
-void test_input(void)
+int test_input(void *data)
 {
     int32_t num;
 
@@ -13,9 +13,11 @@ void test_input(void)
 
     if (uki_input_int32_force_constraint("Введите число от -50 до 100: ", "Это не то, повтори.\n", -50, 100, &num))
         printf("Введено число: %d\n", num);
+    
+    return UKI_OK;
 }
 
-void test_table(void)
+int test_table(void *data)
 {
     uki_table_t table = uki_table_create(2, 3,
         "This is a way too long title ever writen!");
@@ -29,11 +31,24 @@ void test_table(void)
     uki_table_set(&table, 1, 2, "no errors");
 
     uki_table_print(&table);
+    return UKI_OK;
+}
+
+void test_menu(void)
+{
+    uki_menu_t menu = uki_menu_create("My cool menu!!", 3,
+        "test input", test_input,
+        "test table", test_table,
+        "exit", uki_menu_opt_exit
+    );
+
+    uki_menu_run(&menu, NULL);
 }
 
 int main(void)
 {
     // test_input();
-    test_table();
+    // test_table();
+    test_menu();
     return 0;
 }

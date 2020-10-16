@@ -15,7 +15,9 @@ bin/test.exe : \
 
 lib/libuki.a : \
 		obj/uki_input.o \
-		obj/uki_table.o
+		obj/uki_table.o \
+		obj/uki_menu.o \
+		obj/uki_utils.o
 	mkdir -p lib; ar -rc $@ $^
 
 obj/uki_input.o : \
@@ -28,6 +30,18 @@ obj/uki_table.o : \
 		src/uki_table.c \
 		include/uki_defines.h \
 		include/uki_table.h
+	mkdir -p obj; $(CC) $(CFLAGS) -o $@ -c $<
+
+obj/uki_menu.o : \
+		src/uki_menu.c \
+		include/uki_defines.h \
+		include/uki_menu.h
+	mkdir -p obj; $(CC) $(CFLAGS) -o $@ -c $<
+	
+obj/uki_utils.o : \
+		src/uki_utils.c \
+		include/uki_defines.h \
+		include/uki_utils.h
 	mkdir -p obj; $(CC) $(CFLAGS) -o $@ -c $<
 
 clean :
