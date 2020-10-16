@@ -18,7 +18,7 @@ static bool imp__read_line(char *line)
     return true;
 }
 
-UKI_API bool uki_input_int32(const char *msg, const char *err_msg, int32_t *value)
+bool uki_input_int32(const char *msg, const char *err_msg, int32_t *value)
 {
     char line[MAX_TEMP_STR_LEN];
     printf("%s", msg);
@@ -39,7 +39,7 @@ UKI_API bool uki_input_int32(const char *msg, const char *err_msg, int32_t *valu
     return false;
 }
 
-UKI_API bool uki_input_constraint_int32(const char *msg, const char *err_msg, int32_t min, int32_t max, int32_t *value)
+bool uki_input_constraint_int32(const char *msg, const char *err_msg, int32_t min, int32_t max, int32_t *value)
 {
     int32_t num;
     if (uki_input_int32(msg, err_msg, &num))
@@ -54,7 +54,7 @@ UKI_API bool uki_input_constraint_int32(const char *msg, const char *err_msg, in
     return false;
 }
 
-UKI_API bool uki_force_input_int32(const char *msg, const char *repeat_msg, int32_t *value)
+bool uki_force_input_int32(const char *msg, const char *repeat_msg, int32_t *value)
 {
     while (!uki_input_int32(msg, repeat_msg, value))
         if (feof(stdin))
@@ -62,7 +62,7 @@ UKI_API bool uki_force_input_int32(const char *msg, const char *repeat_msg, int3
     return true;
 }
 
-UKI_API bool uki_force_constraint_input_int32(const char *msg, const char *repeat_msg, int32_t min, int32_t max, int32_t *value)
+bool uki_force_constraint_input_int32(const char *msg, const char *repeat_msg, int32_t min, int32_t max, int32_t *value)
 {
     while (!uki_input_constraint_int32(msg, repeat_msg, min, max, value))
         if (feof(stdin))

@@ -20,9 +20,9 @@
 #include <stdbool.h>
 #include "uki_defines.h"
 
-UKI_API bool uki_input_int32(const char *msg, const char *err_msg, int32_t *value);
-UKI_API bool uki_input_constraint_int32(const char *msg, const char *err_msg, int32_t min, int32_t max, int32_t *value);
-UKI_API bool uki_force_input_int32(const char *msg, const char *repeat_msg, int32_t *value);
-UKI_API bool uki_force_constraint_input_int32(const char *msg, const char *repeat_msg, int32_t min, int32_t max, int32_t *value);
+bool uki_input_int32(const char *msg, const char *err_msg, int32_t *value);
+bool uki_input_constraint_int32(const char *msg, const char *err_msg, int32_t min, int32_t max, int32_t *value);
+bool uki_force_input_int32(const char *msg, const char *repeat_msg, int32_t *value);
+bool uki_force_constraint_input_int32(const char *msg, const char *repeat_msg, int32_t min, int32_t max, int32_t *value);
 
 #endif

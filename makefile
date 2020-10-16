@@ -4,7 +4,6 @@ LFLAGS := -Llib -luki
 
 .PHONY : build clean test
 
-build : CFLAGS += -DUKI_COMPILE
 build : lib/libuki.a
 
 test : bin/test.exe
