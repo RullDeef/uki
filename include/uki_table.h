@@ -26,6 +26,7 @@ uki_table_t uki_table_create(uint8_t rows, uint8_t cols, const char *title);
 
 // true если записалось удачно
 bool uki_table_set(uki_table_t *table, uint8_t row, uint8_t col, const char *str);
+bool uki_table_set_fmt(uki_table_t *table, uint8_t row, uint8_t col, const char *fmt, ...);
 
 void uki_table_print(const uki_table_t *table);
 

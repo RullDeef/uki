@@ -17,13 +17,14 @@ void test_input(void)
 
 void test_table(void)
 {
-    uki_table_t table = uki_table_create(2, 3, "title!");
+    uki_table_t table = uki_table_create(2, 3,
+        "This is a way too long title ever writen!");
 
     uki_table_set(&table, 0, 0, "hello");
     uki_table_set(&table, 0, 1, "dear");
     uki_table_set(&table, 0, 2, "World!");
 
-    uki_table_set(&table, 1, 0, "there");
+    uki_table_set_fmt(&table, 1, 0, "%.8f", 3.1415926525f);
     uki_table_set(&table, 1, 1, "must be");
     uki_table_set(&table, 1, 2, "no errors");
 

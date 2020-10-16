@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdarg.h>
 #include "uki_table.h"
 
 static void imp__safe_strcpy(char *dst, const char *src, uint8_t buf_size)
@@ -75,10 +76,24 @@ bool uki_table_set(uki_table_t *table, uint8_t row, uint8_t col, const char *str
     return true;
 }
 
+bool uki_table_set_fmt(uki_table_t *table, uint8_t row, uint8_t col, const char *fmt, ...)
+{
+    va_list arglist;
+
+    char out_str[UKI_MAX_TEMP_STR_LEN];
+    va_start(arglist, fmt);
+    vsprintf(out_str, fmt, arglist);
+    va_end(arglist);
+
+    imp__safe_strcpy(out_str, out_str, UKI_TABLE_STR_BUF_LEN - 1);
+    return uki_table_set(table, row, col, out_str);
+}
+
 void uki_table_print(const uki_table_t *table)
 {
     // total table length (including borders)
     uint8_t length = imp__calc_table_length(table);
+    printf("len = %d\n", length);
     // max length of each col
     uint8_t cols[UKI_TABLE_MAX_COLS];
     imp__calc_cols_lengths(table, cols);
@@ -91,7 +106,7 @@ void uki_table_print(const uki_table_t *table)
         printf("┐\n");
 
         char centered_title[UKI_TABLE_TITLE_BUF_LEN];
-        imp__safe_strcpy(centered_title, table->title, UKI_TABLE_TITLE_BUF_LEN);
+        imp__safe_strcpy(centered_title, table->title, length - 4 + 1);
         imp__center_str(centered_title, length - 4);
         printf("│ %s │\n", centered_title);
 
