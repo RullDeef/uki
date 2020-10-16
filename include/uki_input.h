@@ -21,8 +21,13 @@
 #include "uki_defines.h"
 
 bool uki_input_int32(const char *msg, const char *err_msg, int32_t *value);
-bool uki_input_constraint_int32(const char *msg, const char *err_msg, int32_t min, int32_t max, int32_t *value);
-bool uki_force_input_int32(const char *msg, const char *repeat_msg, int32_t *value);
-bool uki_force_constraint_input_int32(const char *msg, const char *repeat_msg, int32_t min, int32_t max, int32_t *value);
+bool uki_input_int32_constraint(const char *msg, const char *err_msg, int32_t min, int32_t max, int32_t *value);
+bool uki_input_int32_force(const char *msg, const char *repeat_msg, int32_t *value);
+bool uki_input_int32_force_constraint(const char *msg, const char *repeat_msg, int32_t min, int32_t max, int32_t *value);
+
+bool uki_input_float(const char *msg, const char *err_msg, float *value);
+bool uki_input_float_constaint(const char *msg, const char *err_msg, float min, float max, float *value);
+bool uki_input_float_force(const char *msg, const char *repeat_msg, float *value);
+bool uki_input_float_force_constaint(const char *msg, const char *repeat_msg, float min, float max, float *value);
 
 #endif

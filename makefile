@@ -14,13 +14,20 @@ bin/test.exe : \
 	mkdir -p bin; $(CC) $(CFLAGS) -o $@ $< $(LFLAGS) 
 
 lib/libuki.a : \
-		obj/uki_input.o
+		obj/uki_input.o \
+		obj/uki_table.o
 	mkdir -p lib; ar -rc $@ $^
 
 obj/uki_input.o : \
 		src/uki_input.c \
 		include/uki_defines.h \
 		include/uki_input.h
+	mkdir -p obj; $(CC) $(CFLAGS) -o $@ -c $<
+
+obj/uki_table.o : \
+		src/uki_table.c \
+		include/uki_defines.h \
+		include/uki_table.h
 	mkdir -p obj; $(CC) $(CFLAGS) -o $@ -c $<
 
 clean :

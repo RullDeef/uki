@@ -11,5 +11,6 @@
 
 #include "uki_defines.h"
 #include "uki_input.h"
+#include "uki_table.h"
 
 #endif
