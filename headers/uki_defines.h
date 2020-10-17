@@ -19,7 +19,7 @@
 #define UKI_TABLE_STR_BUF_LEN       20
 
 #define UKI_MENU_TITLE_BUF_LEN      120
-#define UKI_MENU_OPT_NAME_BUF_LEN   40
+#define UKI_MENU_OPT_NAME_BUF_LEN   80
 #define UKI_MENU_MAX_OPTS           10
 
 #define UKI_MAX(a, b) ((a) >= (b) ? (a) : (b))

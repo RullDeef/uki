@@ -237,6 +237,80 @@ bool uki_input_float_force_constraint(const char *msg, const char *repeat_msg, f
     return true;
 }
 
+bool uki_input_double(const char *msg, const char *err_msg, double *value)
+{
+    char line[UKI_MAX_TEMP_STR_LEN];
+    printf("%s", msg);
+    if (imp__read_line(line))
+    {
+        char *end = NULL;
+        double num = strtod(line, &end);
+        if (num != 0.0 || (line != end))
+        {
+            *value = num;
+            return true;
+        }
+    }
+    printf("%s", err_msg);
+    return false;
+}
+
+bool uki_input_double_minmax(const char *msg, const char *err_msg, double min, double max, double *value)
+{
+    double num;
+    if (uki_input_double(msg, err_msg, &num))
+    {
+        if (min <= num && num < max)
+        {
+            *value = num;
+            return true;
+        }
+        printf("%s", err_msg);
+        return false;
+    }
+    return false;
+}
+
+bool uki_input_double_constraint(const char *msg, const char *err_msg, double *value, uki_constraint_double_t constraint)
+{
+    double num;
+    if (uki_input_double(msg, err_msg, &num))
+    {
+        if (constraint(num))
+        {
+            *value = num;
+            return true;
+        }
+        printf("%s", err_msg);
+        return false;
+    }
+    return false;
+}
+
+bool uki_input_double_force(const char *msg, const char *repeat_msg, double *value)
+{
+    while (!uki_input_double(msg, repeat_msg, value))
+        if (feof(stdin))
+            return false;
+    return true;
+}
+
+bool uki_input_double_force_minmax(const char *msg, const char *repeat_msg, double min, double max, double *value)
+{
+    while (!uki_input_double_minmax(msg, repeat_msg, min, max, value))
+        if (feof(stdin))
+            return false;
+    return true;
+}
+
+bool uki_input_double_force_constraint(const char *msg, const char *repeat_msg, double *value, uki_constraint_double_t constraint)
+{
+    while (!uki_input_double_constraint(msg, repeat_msg, value, constraint))
+        if (feof(stdin))
+            return false;
+    return true;
+}
+
 bool uki_input_str(const char *msg, const char *err_msg, char *value, uint8_t buf_size)
 {
     char line[UKI_MAX_TEMP_STR_LEN];

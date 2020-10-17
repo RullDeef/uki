@@ -19,6 +19,7 @@
 typedef bool (*uki_constraint_int32_t)(int32_t);
 typedef bool (*uki_constraint_uint32_t)(uint32_t);
 typedef bool (*uki_constraint_float_t)(float);
+typedef bool (*uki_constraint_double_t)(double);
 typedef bool (*uki_constraint_str_t)(const char*);
 
 bool uki_input_int32(const char *msg, const char *err_msg, int32_t *value);
@@ -41,6 +42,13 @@ bool uki_input_float_constraint(const char *msg, const char *err_msg, float *val
 bool uki_input_float_force(const char *msg, const char *repeat_msg, float *value);
 bool uki_input_float_force_minmax(const char *msg, const char *repeat_msg, float min, float max, float *value);
 bool uki_input_float_force_constraint(const char *msg, const char *repeat_msg, float *value, uki_constraint_float_t constraint);
+
+bool uki_input_double(const char *msg, const char *err_msg, double *value);
+bool uki_input_double_minmax(const char *msg, const char *err_msg, double min, double max, double *value);
+bool uki_input_double_constraint(const char *msg, const char *err_msg, double *value, uki_constraint_double_t constraint);
+bool uki_input_double_force(const char *msg, const char *repeat_msg, double *value);
+bool uki_input_double_force_minmax(const char *msg, const char *repeat_msg, double min, double max, double *value);
+bool uki_input_double_force_constraint(const char *msg, const char *repeat_msg, double *value, uki_constraint_double_t constraint);
 
 // Для ввода строки в статический буфер
 bool uki_input_str(const char *msg, const char *err_msg, char *value, uint8_t buf_size);
