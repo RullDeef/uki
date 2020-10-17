@@ -72,6 +72,7 @@ void uki_clear_console(void);
 
 
 typedef bool (*uki_constraint_int32_t)(int32_t);
+typedef bool (*uki_constraint_uint32_t)(uint32_t);
 typedef bool (*uki_constraint_float_t)(float);
 typedef bool (*uki_constraint_str_t)(const char*);
 
@@ -81,6 +82,13 @@ bool uki_input_int32_constraint(const char *msg, const char *err_msg, int32_t *v
 bool uki_input_int32_force(const char *msg, const char *repeat_msg, int32_t *value);
 bool uki_input_int32_force_minmax(const char *msg, const char *repeat_msg, int32_t min, int32_t max, int32_t *value);
 bool uki_input_int32_force_constraint(const char *msg, const char *repeat_msg, int32_t *value, uki_constraint_int32_t constraint);
+
+bool uki_input_uint32(const char *msg, const char *err_msg, uint32_t *value);
+bool uki_input_uint32_minmax(const char *msg, const char *err_msg, uint32_t min, uint32_t max, uint32_t *value);
+bool uki_input_uint32_constraint(const char *msg, const char *err_msg, uint32_t *value, uki_constraint_uint32_t constraint);
+bool uki_input_uint32_force(const char *msg, const char *repeat_msg, uint32_t *value);
+bool uki_input_uint32_force_minmax(const char *msg, const char *repeat_msg, uint32_t min, uint32_t max, uint32_t *value);
+bool uki_input_uint32_force_constraint(const char *msg, const char *repeat_msg, uint32_t *value, uki_constraint_uint32_t constraint);
 
 bool uki_input_float(const char *msg, const char *err_msg, float *value);
 bool uki_input_float_minmax(const char *msg, const char *err_msg, float min, float max, float *value);

@@ -91,6 +91,78 @@ bool uki_input_int32_force_constraint(const char *msg, const char *repeat_msg, i
     return true;
 }
 
+bool uki_input_uint32(const char *msg, const char *err_msg, uint32_t *value)
+{
+    char line[UKI_MAX_TEMP_STR_LEN];
+    printf("%s", msg);
+    if (imp__read_line(line))
+    {
+        char *end = NULL;
+        unsigned long num = strtoul(line, &end, 10);
+        if (num != 0 || (line != end))
+        {
+            *value = (uint32_t)num;
+            return true;
+        }
+    }
+    printf("%s", err_msg);
+    return false;
+}
+
+bool uki_input_uint32_minmax(const char *msg, const char *err_msg, uint32_t min, uint32_t max, uint32_t *value)
+{
+    uint32_t num;
+    if (uki_input_uint32(msg, err_msg, &num))
+    {
+        if (min <= num && num < max)
+        {
+            *value = num;
+            return true;
+        }
+        printf("%s", err_msg);
+    }
+    return false;
+}
+
+bool uki_input_uint32_constraint(const char *msg, const char *err_msg, uint32_t *value, uki_constraint_uint32_t constraint)
+{
+    uint32_t num;
+    if (uki_input_uint32(msg, err_msg, &num))
+    {
+        if (constraint(num))
+        {
+            *value = num;
+            return true;
+        }
+        printf("%s", err_msg);
+    }
+    return false;
+}
+
+bool uki_input_uint32_force(const char *msg, const char *repeat_msg, uint32_t *value)
+{
+    while (!uki_input_uint32(msg, repeat_msg, value))
+        if (feof(stdin))
+            return false;
+    return true;
+}
+
+bool uki_input_uint32_force_minmax(const char *msg, const char *repeat_msg, uint32_t min, uint32_t max, uint32_t *value)
+{
+    while (!uki_input_uint32_minmax(msg, repeat_msg, min, max, value))
+        if (feof(stdin))
+            return false;
+    return true;
+}
+
+bool uki_input_uint32_force_constraint(const char *msg, const char *repeat_msg, uint32_t *value, uki_constraint_uint32_t constraint)
+{
+    while (!uki_input_uint32_constraint(msg, repeat_msg, value, constraint))
+        if (feof(stdin))
+            return false;
+    return true;
+}
+
 bool uki_input_float(const char *msg, const char *err_msg, float *value)
 {
     char line[UKI_MAX_TEMP_STR_LEN];
