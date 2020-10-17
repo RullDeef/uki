@@ -1,3 +1,9 @@
+/*
+    Общие макроопределения для библиотеки uki.
+
+    (C) 2020 - Rull Deef
+*/
+
 #ifndef __UKI_DEFINES_H_
 #define __UKI_DEFINES_H_
 

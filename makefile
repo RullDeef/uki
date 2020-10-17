@@ -1,11 +1,13 @@
 CC := gcc
-CFLAGS := -std=c99 -Wall -Werror -pedantic -Wextra -Iinclude
+CFLAGS := -std=c99 -Wall -Werror -pedantic -Wextra -Iheaders -Iinclude
 LFLAGS := -Llib -luki
 
 .PHONY : build clean test
 
 build : lib/libuki.a
+	./make_include.sh
 
+test : build
 test : bin/test.exe
 
 bin/test.exe : \
@@ -22,27 +24,27 @@ lib/libuki.a : \
 
 obj/uki_input.o : \
 		src/uki_input.c \
-		include/uki_defines.h \
-		include/uki_input.h
+		headers/uki_defines.h \
+		headers/uki_input.h
 	mkdir -p obj; $(CC) $(CFLAGS) -o $@ -c $<
 
 obj/uki_table.o : \
 		src/uki_table.c \
-		include/uki_defines.h \
-		include/uki_table.h
+		headers/uki_defines.h \
+		headers/uki_table.h
 	mkdir -p obj; $(CC) $(CFLAGS) -o $@ -c $<
 
 obj/uki_menu.o : \
 		src/uki_menu.c \
-		include/uki_defines.h \
-		include/uki_menu.h
+		headers/uki_defines.h \
+		headers/uki_menu.h
 	mkdir -p obj; $(CC) $(CFLAGS) -o $@ -c $<
 	
 obj/uki_utils.o : \
 		src/uki_utils.c \
-		include/uki_defines.h \
-		include/uki_utils.h
+		headers/uki_defines.h \
+		headers/uki_utils.h
 	mkdir -p obj; $(CC) $(CFLAGS) -o $@ -c $<
 
 clean :
-	rm -rf obj bin lib *.stackdump
+	rm -rf obj bin lib include *.stackdump

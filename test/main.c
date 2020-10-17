@@ -3,6 +3,7 @@
 
 int test_input(void *data)
 {
+    data = data;
     int32_t num;
 
     if (uki_input_int32("Введите число: ", "Неверный ввод!\n", &num))
@@ -19,6 +20,7 @@ int test_input(void *data)
 
 int test_table(void *data)
 {
+    data = data;
     uki_table_t table = uki_table_create(2, 3,
         "This is a way too long title ever writen!");
 
