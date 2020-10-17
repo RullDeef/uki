@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
 #include <limits.h>
@@ -357,4 +358,20 @@ bool uki_input_str_force_constraint(const char *msg, const char *repeat_msg, cha
         if (feof(stdin))
             return false;
     return true;
+}
+
+int uki_input_scanf_line(const char *msg, const char *fmt, ...)
+{
+    char line[UKI_MAX_TEMP_STR_LEN];
+    va_list arglist;
+
+    int result = EOF;
+    printf("%s", msg);
+    if (imp__read_line(line))
+    {
+        va_start(arglist, fmt);
+        result = vsscanf(line, fmt, arglist);
+        va_end(arglist);
+    }
+    return result;
 }

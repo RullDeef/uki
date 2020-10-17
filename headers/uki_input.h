@@ -56,4 +56,7 @@ bool uki_input_str_force(const char *msg, const char *repeat_msg, char *value, u
 bool uki_input_str_constraint(const char *msg, const char *err_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint);
 bool uki_input_str_force_constraint(const char *msg, const char *repeat_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint);
 
+// вариант сканфа, но в одну строку
+int uki_input_scanf_line(const char *msg, const char *fmt, ...);
+
 #endif

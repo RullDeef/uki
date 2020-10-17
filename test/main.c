@@ -15,6 +15,13 @@ int test_input(void *data)
     if (uki_input_int32_force_minmax("Введите число от -50 до 100: ", "Это не то, повтори.\n", -50, 100, &num))
         printf("Введено число: %d\n", num);
     
+    float a;
+    unsigned long b;
+    if (uki_input_scanf_line("Введите вещественное и натуральное числа: ", "%f %lu", &a, &b) == 2)
+        printf("a = %f, b = %lu\n", a, b);
+    else
+        printf("bad input\n");
+    
     return UKI_OK;
 }
 
