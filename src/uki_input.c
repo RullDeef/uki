@@ -164,3 +164,51 @@ bool uki_input_float_force_constraint(const char *msg, const char *repeat_msg, f
             return false;
     return true;
 }
+
+bool uki_input_str(const char *msg, const char *err_msg, char *value, uint8_t buf_size)
+{
+    char line[UKI_MAX_TEMP_STR_LEN];
+    printf("%s", msg);
+    if (imp__read_line(line))
+    {
+        if (strlen(line) + 1 < buf_size)
+        {
+            strcpy(value, line);
+            return true;
+        }
+    }
+    printf("%s", err_msg);
+    return false;
+}
+
+bool uki_input_str_force(const char *msg, const char *repeat_msg, char *value, uint8_t buf_size)
+{
+    while (!uki_input_str(msg, repeat_msg, value, buf_size))
+        if (feof(stdin))
+            return false;
+    return true;
+}
+
+bool uki_input_str_constraint(const char *msg, const char *err_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint)
+{
+    char line[UKI_MAX_TEMP_STR_LEN];
+    printf("%s", msg);
+    if (imp__read_line(line))
+    {
+        if (strlen(line) + 1 < buf_size && constraint(line))
+        {
+            strcpy(value, line);
+            return true;
+        }
+    }
+    printf("%s", err_msg);
+    return false;
+}
+
+bool uki_input_str_force_constraint(const char *msg, const char *repeat_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint)
+{
+    while (!uki_input_str_constraint(msg, repeat_msg, value, buf_size, constraint))
+        if (feof(stdin))
+            return false;
+    return true;
+}

@@ -38,9 +38,10 @@ bool uki_input_float_force(const char *msg, const char *repeat_msg, float *value
 bool uki_input_float_force_minmax(const char *msg, const char *repeat_msg, float min, float max, float *value);
 bool uki_input_float_force_constraint(const char *msg, const char *repeat_msg, float *value, uki_constraint_float_t constraint);
 
+// Для ввода строки в статический буфер
 bool uki_input_str(const char *msg, const char *err_msg, char *value, uint8_t buf_size);
 bool uki_input_str_force(const char *msg, const char *repeat_msg, char *value, uint8_t buf_size);
-bool uki_input_str_constraint(const char *msg, const char *repeat_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint);
+bool uki_input_str_constraint(const char *msg, const char *err_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint);
 bool uki_input_str_force_constraint(const char *msg, const char *repeat_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint);
 
 #endif
