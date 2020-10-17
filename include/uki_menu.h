@@ -33,7 +33,7 @@ typedef struct
 
 uki_menu_t uki_menu_create(const char *title, uint8_t opts_amount, ...);
 
-// Функция для выхода из меню
+// Стандартная функция для выхода из меню
 int uki_menu_opt_exit(void *data);
 
 // Возвращает UKI_OK, если не было никаких ошибок

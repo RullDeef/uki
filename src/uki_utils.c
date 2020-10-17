@@ -25,3 +25,8 @@ void uki__center_str(char *str, uint8_t size)
         str[size] = '\0';
     }
 }
+
+void uki_clear_console(void)
+{
+    system("clear");
+}

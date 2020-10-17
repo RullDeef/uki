@@ -51,7 +51,7 @@ int uki_menu_run(const uki_menu_t *menu, void *data)
         imp__print_menu(menu);
 
         int32_t opt;
-        if (uki_input_int32_constraint("> ", "", 1, menu->opts_amount + 1, &opt))
+        if (uki_input_int32_minmax("> ", "", 1, menu->opts_amount + 1, &opt))
             result = menu->opts[opt - 1].func(data);
     }
 

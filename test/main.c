@@ -8,10 +8,10 @@ int test_input(void *data)
     if (uki_input_int32("Введите число: ", "Неверный ввод!\n", &num))
         printf("Введено число: %d\n", num);
     
-    if (uki_input_int32_constraint("Введите число от 10 до 20: ", "Не правильно!\n", 10, 20, &num))
+    if (uki_input_int32_minmax("Введите число от 10 до 20: ", "Не правильно!\n", 10, 20, &num))
         printf("Введено число: %d\n", num);
 
-    if (uki_input_int32_force_constraint("Введите число от -50 до 100: ", "Это не то, повтори.\n", -50, 100, &num))
+    if (uki_input_int32_force_minmax("Введите число от -50 до 100: ", "Это не то, повтори.\n", -50, 100, &num))
         printf("Введено число: %d\n", num);
     
     return UKI_OK;

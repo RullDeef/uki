@@ -16,4 +16,6 @@
 void uki__safe_strcpy(char *dst, const char *src, uint8_t buf_size);
 void uki__center_str(char *str, uint8_t size);
 
+void uki_clear_console(void);
+
 #endif

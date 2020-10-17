@@ -37,12 +37,27 @@ bool uki_input_int32(const char *msg, const char *err_msg, int32_t *value)
     return false;
 }
 
-bool uki_input_int32_constraint(const char *msg, const char *err_msg, int32_t min, int32_t max, int32_t *value)
+bool uki_input_int32_minmax(const char *msg, const char *err_msg, int32_t min, int32_t max, int32_t *value)
 {
     int32_t num;
     if (uki_input_int32(msg, err_msg, &num))
     {
         if (min <= num && num < max)
+        {
+            *value = num;
+            return true;
+        }
+        printf("%s", err_msg);
+    }
+    return false;
+}
+
+bool uki_input_int32_constraint(const char *msg, const char *err_msg, int32_t *value, uki_constraint_int32_t constraint)
+{
+    int32_t num;
+    if (uki_input_int32(msg, err_msg, &num))
+    {
+        if (constraint(num))
         {
             *value = num;
             return true;
@@ -60,9 +75,17 @@ bool uki_input_int32_force(const char *msg, const char *repeat_msg, int32_t *val
     return true;
 }
 
-bool uki_input_int32_force_constraint(const char *msg, const char *repeat_msg, int32_t min, int32_t max, int32_t *value)
+bool uki_input_int32_force_minmax(const char *msg, const char *repeat_msg, int32_t min, int32_t max, int32_t *value)
 {
-    while (!uki_input_int32_constraint(msg, repeat_msg, min, max, value))
+    while (!uki_input_int32_minmax(msg, repeat_msg, min, max, value))
+        if (feof(stdin))
+            return false;
+    return true;
+}
+
+bool uki_input_int32_force_constraint(const char *msg, const char *repeat_msg, int32_t *value, uki_constraint_int32_t constraint)
+{
+    while (!uki_input_int32_constraint(msg, repeat_msg, value, constraint))
         if (feof(stdin))
             return false;
     return true;
@@ -86,12 +109,28 @@ bool uki_input_float(const char *msg, const char *err_msg, float *value)
     return false;
 }
 
-bool uki_input_float_constaint(const char *msg, const char *err_msg, float min, float max, float *value)
+bool uki_input_float_minmax(const char *msg, const char *err_msg, float min, float max, float *value)
 {
     float num;
     if (uki_input_float(msg, err_msg, &num))
     {
         if (min <= num && num < max)
+        {
+            *value = num;
+            return true;
+        }
+        printf("%s", err_msg);
+        return false;
+    }
+    return false;
+}
+
+bool uki_input_float_constraint(const char *msg, const char *err_msg, float *value, uki_constraint_float_t constraint)
+{
+    float num;
+    if (uki_input_float(msg, err_msg, &num))
+    {
+        if (constraint(num))
         {
             *value = num;
             return true;
@@ -110,9 +149,17 @@ bool uki_input_float_force(const char *msg, const char *repeat_msg, float *value
     return true;
 }
 
-bool uki_input_float_force_constaint(const char *msg, const char *repeat_msg, float min, float max, float *value)
+bool uki_input_float_force_minmax(const char *msg, const char *repeat_msg, float min, float max, float *value)
 {
-    while (!uki_input_float_constaint(msg, repeat_msg, min, max, value))
+    while (!uki_input_float_minmax(msg, repeat_msg, min, max, value))
+        if (feof(stdin))
+            return false;
+    return true;
+}
+
+bool uki_input_float_force_constraint(const char *msg, const char *repeat_msg, float *value, uki_constraint_float_t constraint)
+{
+    while (!uki_input_float_constraint(msg, repeat_msg, value, constraint))
         if (feof(stdin))
             return false;
     return true;
