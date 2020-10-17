@@ -26,7 +26,7 @@ bool uki_input_int32(const char *msg, const char *err_msg, int32_t *value)
         long num = strtol(line, &end, 10);
         if (num != 0 || (line != end))
         {
-            if (-1L << 31 < num && num < 1L << 31)
+            if (-2147483648L < num && num < 2147483648L)
             {
                 *value = (int32_t)num;
                 return true;

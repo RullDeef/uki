@@ -39,6 +39,7 @@ uki_menu_t uki_menu_create(const char *title, uint8_t opts_amount, ...)
 
 int uki_menu_opt_exit(void *data)
 {
+    data = data; // -Wextra requires
     return UKI_MENU_EXIT;
 }
 

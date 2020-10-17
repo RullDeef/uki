@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -std=c99 -Wall -Werror -pedantic -Iinclude
+CFLAGS := -std=c99 -Wall -Werror -pedantic -Wextra -Iinclude
 LFLAGS := -Llib -luki
 
 .PHONY : build clean test
