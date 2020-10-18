@@ -8,7 +8,7 @@
 
 static bool imp__read_line(char *line)
 {
-    if (fgets(line, UKI_MAX_TEMP_STR_LEN, stdin) == NULL)
+    if (fgets(line, UKI_TEMP_STR_BUF_LEN, stdin) == NULL)
         return false;
     
     while (strlen(line) > 0 && isblank(line[strlen(line) - 1]))
@@ -19,7 +19,7 @@ static bool imp__read_line(char *line)
 
 bool uki_input_int32(const char *msg, const char *err_msg, int32_t *value)
 {
-    char line[UKI_MAX_TEMP_STR_LEN];
+    char line[UKI_TEMP_STR_BUF_LEN];
     printf("%s", msg);
     if (imp__read_line(line))
     {
@@ -94,7 +94,7 @@ bool uki_input_int32_force_constraint(const char *msg, const char *repeat_msg, i
 
 bool uki_input_uint32(const char *msg, const char *err_msg, uint32_t *value)
 {
-    char line[UKI_MAX_TEMP_STR_LEN];
+    char line[UKI_TEMP_STR_BUF_LEN];
     printf("%s", msg);
     if (imp__read_line(line))
     {
@@ -166,7 +166,7 @@ bool uki_input_uint32_force_constraint(const char *msg, const char *repeat_msg, 
 
 bool uki_input_float(const char *msg, const char *err_msg, float *value)
 {
-    char line[UKI_MAX_TEMP_STR_LEN];
+    char line[UKI_TEMP_STR_BUF_LEN];
     printf("%s", msg);
     if (imp__read_line(line))
     {
@@ -240,7 +240,7 @@ bool uki_input_float_force_constraint(const char *msg, const char *repeat_msg, f
 
 bool uki_input_double(const char *msg, const char *err_msg, double *value)
 {
-    char line[UKI_MAX_TEMP_STR_LEN];
+    char line[UKI_TEMP_STR_BUF_LEN];
     printf("%s", msg);
     if (imp__read_line(line))
     {
@@ -312,9 +312,9 @@ bool uki_input_double_force_constraint(const char *msg, const char *repeat_msg, 
     return true;
 }
 
-bool uki_input_str(const char *msg, const char *err_msg, char *value, uint8_t buf_size)
+bool uki_input_str(const char *msg, const char *err_msg, char *value, uint32_t buf_size)
 {
-    char line[UKI_MAX_TEMP_STR_LEN];
+    char line[UKI_TEMP_STR_BUF_LEN];
     printf("%s", msg);
     if (imp__read_line(line))
     {
@@ -328,7 +328,7 @@ bool uki_input_str(const char *msg, const char *err_msg, char *value, uint8_t bu
     return false;
 }
 
-bool uki_input_str_force(const char *msg, const char *repeat_msg, char *value, uint8_t buf_size)
+bool uki_input_str_force(const char *msg, const char *repeat_msg, char *value, uint32_t buf_size)
 {
     while (!uki_input_str(msg, repeat_msg, value, buf_size))
         if (feof(stdin))
@@ -336,9 +336,9 @@ bool uki_input_str_force(const char *msg, const char *repeat_msg, char *value, u
     return true;
 }
 
-bool uki_input_str_constraint(const char *msg, const char *err_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint)
+bool uki_input_str_constraint(const char *msg, const char *err_msg, char *value, uint32_t buf_size, uki_constraint_str_t constraint)
 {
-    char line[UKI_MAX_TEMP_STR_LEN];
+    char line[UKI_TEMP_STR_BUF_LEN];
     printf("%s", msg);
     if (imp__read_line(line))
     {
@@ -352,7 +352,7 @@ bool uki_input_str_constraint(const char *msg, const char *err_msg, char *value,
     return false;
 }
 
-bool uki_input_str_force_constraint(const char *msg, const char *repeat_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint)
+bool uki_input_str_force_constraint(const char *msg, const char *repeat_msg, char *value, uint32_t buf_size, uki_constraint_str_t constraint)
 {
     while (!uki_input_str_constraint(msg, repeat_msg, value, buf_size, constraint))
         if (feof(stdin))
@@ -362,7 +362,7 @@ bool uki_input_str_force_constraint(const char *msg, const char *repeat_msg, cha
 
 int uki_input_scanf_line(const char *msg, const char *fmt, ...)
 {
-    char line[UKI_MAX_TEMP_STR_LEN];
+    char line[UKI_TEMP_STR_BUF_LEN];
     va_list arglist;
 
     int result = EOF;

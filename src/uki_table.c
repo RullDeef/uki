@@ -6,14 +6,14 @@
 #include "uki_table.h"
 #include "uki_utils.h"
 
-static uint8_t imp__calc_table_length(const uki_table_t *table)
+static uint32_t imp__calc_table_length(const uki_table_t *table)
 {
-    uint8_t length = 1;
+    uint32_t length = 1;
 
-    for (uint8_t col = 0; col < table->cols; col++)
+    for (uint32_t col = 0; col < table->cols; col++)
     {
-        uint8_t col_length = 0;
-        for (uint8_t row = 0; row < table->rows; row++)
+        uint32_t col_length = 0;
+        for (uint32_t row = 0; row < table->rows; row++)
             col_length = UKI_MAX(col_length, strlen(table->data[row][col]));
         length += col_length + 3;
     }
@@ -21,17 +21,17 @@ static uint8_t imp__calc_table_length(const uki_table_t *table)
     return length;
 }
 
-static void imp__calc_cols_lengths(const uki_table_t *table, uint8_t *cols)
+static void imp__calc_cols_lengths(const uki_table_t *table, uint32_t *cols)
 {
-    for (uint8_t col = 0; col < table->cols; col++)
+    for (uint32_t col = 0; col < table->cols; col++)
     {
         cols[col] = 0;
-        for (uint8_t row = 0; row < table->rows; row++)
+        for (uint32_t row = 0; row < table->rows; row++)
             cols[col] = UKI_MAX(cols[col], strlen(table->data[row][col]));
     }
 }
 
-uki_table_t uki_table_create(uint8_t rows, uint8_t cols, const char *title)
+uki_table_t uki_table_create(uint32_t rows, uint32_t cols, const char *title)
 {
     uki_table_t table;
     memset(&table, 0, sizeof(uki_table_t));
@@ -45,7 +45,7 @@ uki_table_t uki_table_create(uint8_t rows, uint8_t cols, const char *title)
     return table;
 }
 
-bool uki_table_set(uki_table_t *table, uint8_t row, uint8_t col, const char *str)
+bool uki_table_set(uki_table_t *table, uint32_t row, uint32_t col, const char *str)
 {
     if (row >= table->rows || col >= table->cols)
         return false;
@@ -54,11 +54,11 @@ bool uki_table_set(uki_table_t *table, uint8_t row, uint8_t col, const char *str
     return true;
 }
 
-bool uki_table_set_fmt(uki_table_t *table, uint8_t row, uint8_t col, const char *fmt, ...)
+bool uki_table_set_fmt(uki_table_t *table, uint32_t row, uint32_t col, const char *fmt, ...)
 {
     va_list arglist;
 
-    char out_str[UKI_MAX_TEMP_STR_LEN];
+    char out_str[UKI_TEMP_STR_BUF_LEN];
     va_start(arglist, fmt);
     vsprintf(out_str, fmt, arglist);
     va_end(arglist);
@@ -70,15 +70,15 @@ bool uki_table_set_fmt(uki_table_t *table, uint8_t row, uint8_t col, const char 
 void uki_table_print(const uki_table_t *table)
 {
     // total table length (including borders)
-    uint8_t length = imp__calc_table_length(table);
+    uint32_t length = imp__calc_table_length(table);
     // max length of each col
-    uint8_t cols[UKI_TABLE_MAX_COLS];
+    uint32_t cols[UKI_TABLE_MAX_COLS];
     imp__calc_cols_lengths(table, cols);
 
     if (table->title != NULL)
     {
         printf("┌");
-        for (uint8_t i = 0; i < length - 2; i++)
+        for (uint32_t i = 0; i < length - 2; i++)
             printf("─");
         printf("┐\n");
 
@@ -88,9 +88,9 @@ void uki_table_print(const uki_table_t *table)
         printf("│ %s │\n", centered_title);
 
         printf("├");
-        for (uint8_t col = 0; col < table->cols; col++)
+        for (uint32_t col = 0; col < table->cols; col++)
         {
-            for (uint8_t i = 0; i < cols[col] + 2; i++)
+            for (uint32_t i = 0; i < cols[col] + 2; i++)
                 printf("─");
             if (col + 1 < table->cols)
                 printf("┬");
@@ -100,9 +100,9 @@ void uki_table_print(const uki_table_t *table)
     else
     {
         printf("┌");
-        for (uint8_t col = 0; col < table->cols; col++)
+        for (uint32_t col = 0; col < table->cols; col++)
         {
-            for (uint8_t i = 0; i < cols[col] + 2; i++)
+            for (uint32_t i = 0; i < cols[col] + 2; i++)
                 printf("─");
             if (col + 1 < table->cols)
                 printf("┬");
@@ -111,11 +111,11 @@ void uki_table_print(const uki_table_t *table)
     }
 
     // print actual data
-    for (uint8_t row = 0; row < table->rows; row++)
+    for (uint32_t row = 0; row < table->rows; row++)
     {
         printf("│");
 
-        for (uint8_t col = 0; col < table->cols; col++)
+        for (uint32_t col = 0; col < table->cols; col++)
         {
             char centered_str[UKI_TABLE_STR_BUF_LEN];
             uki__safe_strcpy(centered_str, table->data[row][col], UKI_TABLE_STR_BUF_LEN);
@@ -127,9 +127,9 @@ void uki_table_print(const uki_table_t *table)
     }
 
     printf("└");
-    for (uint8_t col = 0; col < table->cols; col++)
+    for (uint32_t col = 0; col < table->cols; col++)
     {
-        for (uint8_t i = 0; i < cols[col] + 2; i++)
+        for (uint32_t i = 0; i < cols[col] + 2; i++)
             printf("─");
         if (col + 1 < table->cols)
             printf("┴");

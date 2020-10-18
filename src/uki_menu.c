@@ -11,11 +11,11 @@ static void imp__print_menu(const uki_menu_t *menu)
     if (strlen(menu->title) > 0)
         printf("%s\n", menu->title);
 
-    for (uint8_t i = 0; i < menu->opts_amount; i++)
+    for (uint32_t i = 0; i < menu->opts_amount; i++)
         printf("%2d. %s\n", i + 1, menu->opts[i].name);
 }
 
-uki_menu_t uki_menu_create(const char *title, uint8_t opts_amount, ...)
+uki_menu_t uki_menu_create(const char *title, uint32_t opts_amount, ...)
 {
     uki_menu_t menu;
     memset(&menu, 0, sizeof(uki_menu_t));
@@ -26,7 +26,7 @@ uki_menu_t uki_menu_create(const char *title, uint8_t opts_amount, ...)
 
     va_list arglist;
     va_start(arglist, opts_amount);
-    for (uint8_t i = 0; i < opts_amount; i++)
+    for (uint32_t i = 0; i < opts_amount; i++)
     {
         const char *name = va_arg(arglist, const char*);
         uki__safe_strcpy(menu.opts[i].name, name, UKI_MENU_OPT_NAME_BUF_LEN);

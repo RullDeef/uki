@@ -22,15 +22,16 @@
 #define UKI_ERROR                   1
 #define UKI_MENU_EXIT               -203
 
-#define UKI_MAX_TEMP_STR_LEN        80
+#define UKI_TEMP_STR_BUF_LEN        255
+#define UKI_FMT_STR_BUF_LEN         20
 
-#define UKI_TABLE_MAX_ROWS          25
-#define UKI_TABLE_MAX_COLS          15
-#define UKI_TABLE_TITLE_BUF_LEN     40
-#define UKI_TABLE_STR_BUF_LEN       20
+#define UKI_TABLE_MAX_ROWS          100
+#define UKI_TABLE_MAX_COLS          20
+#define UKI_TABLE_TITLE_BUF_LEN     255
+#define UKI_TABLE_STR_BUF_LEN       64
 
 #define UKI_MENU_TITLE_BUF_LEN      120
-#define UKI_MENU_OPT_NAME_BUF_LEN   80
+#define UKI_MENU_OPT_NAME_BUF_LEN   96
 #define UKI_MENU_MAX_OPTS           10
 
 #define UKI_MAX(a, b) ((a) >= (b) ? (a) : (b))
@@ -47,10 +48,11 @@
 
 #include <sys/types.h>
 
-void uki__safe_strcpy(char *dst, const char *src, uint8_t buf_size);
-void uki__center_str(char *str, uint8_t size);
+void uki__safe_strcpy(char *dst, const char *src, uint32_t buf_size);
+void uki__center_str(char *str, uint32_t size);
 
 void uki_clear_console(void);
+void uki_wait(const char *msg);
 
 #endif
 /*
@@ -106,10 +108,10 @@ bool uki_input_double_force_minmax(const char *msg, const char *repeat_msg, doub
 bool uki_input_double_force_constraint(const char *msg, const char *repeat_msg, double *value, uki_constraint_double_t constraint);
 
 // Для ввода строки в статический буфер
-bool uki_input_str(const char *msg, const char *err_msg, char *value, uint8_t buf_size);
-bool uki_input_str_force(const char *msg, const char *repeat_msg, char *value, uint8_t buf_size);
-bool uki_input_str_constraint(const char *msg, const char *err_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint);
-bool uki_input_str_force_constraint(const char *msg, const char *repeat_msg, char *value, uint8_t buf_size, uki_constraint_str_t constraint);
+bool uki_input_str(const char *msg, const char *err_msg, char *value, uint32_t buf_size);
+bool uki_input_str_force(const char *msg, const char *repeat_msg, char *value, uint32_t buf_size);
+bool uki_input_str_constraint(const char *msg, const char *err_msg, char *value, uint32_t buf_size, uki_constraint_str_t constraint);
+bool uki_input_str_force_constraint(const char *msg, const char *repeat_msg, char *value, uint32_t buf_size, uki_constraint_str_t constraint);
 
 // вариант сканфа, но в одну строку
 int uki_input_scanf_line(const char *msg, const char *fmt, ...);
@@ -129,17 +131,17 @@ int uki_input_scanf_line(const char *msg, const char *fmt, ...);
 
 typedef struct
 {
-    uint8_t rows;
-    uint8_t cols;
+    uint32_t rows;
+    uint32_t cols;
     char title[UKI_TABLE_TITLE_BUF_LEN];
     char data[UKI_TABLE_MAX_ROWS][UKI_TABLE_MAX_COLS][UKI_TABLE_STR_BUF_LEN];
 } uki_table_t;
 
-uki_table_t uki_table_create(uint8_t rows, uint8_t cols, const char *title);
+uki_table_t uki_table_create(uint32_t rows, uint32_t cols, const char *title);
 
 // true если записалось удачно
-bool uki_table_set(uki_table_t *table, uint8_t row, uint8_t col, const char *str);
-bool uki_table_set_fmt(uki_table_t *table, uint8_t row, uint8_t col, const char *fmt, ...);
+bool uki_table_set(uki_table_t *table, uint32_t row, uint32_t col, const char *str);
+bool uki_table_set_fmt(uki_table_t *table, uint32_t row, uint32_t col, const char *fmt, ...);
 
 void uki_table_print(const uki_table_t *table);
 
@@ -168,12 +170,12 @@ typedef struct
 
 typedef struct
 {
-    uint8_t opts_amount;
+    uint32_t opts_amount;
     char title[UKI_MENU_TITLE_BUF_LEN];
     uki_menu_opt_t opts[UKI_MENU_MAX_OPTS];
 } uki_menu_t;
 
-uki_menu_t uki_menu_create(const char *title, uint8_t opts_amount, ...);
+uki_menu_t uki_menu_create(const char *title, uint32_t opts_amount, ...);
 
 // Стандартная функция для выхода из меню
 int uki_menu_opt_exit(void *data);

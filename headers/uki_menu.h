@@ -22,12 +22,12 @@ typedef struct
 
 typedef struct
 {
-    uint8_t opts_amount;
+    uint32_t opts_amount;
     char title[UKI_MENU_TITLE_BUF_LEN];
     uki_menu_opt_t opts[UKI_MENU_MAX_OPTS];
 } uki_menu_t;
 
-uki_menu_t uki_menu_create(const char *title, uint8_t opts_amount, ...);
+uki_menu_t uki_menu_create(const char *title, uint32_t opts_amount, ...);
 
 // Стандартная функция для выхода из меню
 int uki_menu_opt_exit(void *data);

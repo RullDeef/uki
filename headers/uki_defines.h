@@ -11,15 +11,16 @@
 #define UKI_ERROR                   1
 #define UKI_MENU_EXIT               -203
 
-#define UKI_MAX_TEMP_STR_LEN        80
+#define UKI_TEMP_STR_BUF_LEN        255
+#define UKI_FMT_STR_BUF_LEN         20
 
-#define UKI_TABLE_MAX_ROWS          25
-#define UKI_TABLE_MAX_COLS          15
-#define UKI_TABLE_TITLE_BUF_LEN     40
-#define UKI_TABLE_STR_BUF_LEN       20
+#define UKI_TABLE_MAX_ROWS          100
+#define UKI_TABLE_MAX_COLS          20
+#define UKI_TABLE_TITLE_BUF_LEN     255
+#define UKI_TABLE_STR_BUF_LEN       64
 
 #define UKI_MENU_TITLE_BUF_LEN      120
-#define UKI_MENU_OPT_NAME_BUF_LEN   80
+#define UKI_MENU_OPT_NAME_BUF_LEN   96
 #define UKI_MENU_MAX_OPTS           10
 
 #define UKI_MAX(a, b) ((a) >= (b) ? (a) : (b))
