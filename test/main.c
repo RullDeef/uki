@@ -22,6 +22,10 @@ int test_input(void *data)
     else
         printf("bad input\n");
     
+    char str[200];
+    if (uki_input_str("Строку, пожалуйста: ", "bad str\n", str, 200))
+        printf("str = '%s'\n", str);
+
     return UKI_OK;
 }
 

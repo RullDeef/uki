@@ -47,6 +47,7 @@
 #define __UKI_UTILS_H_
 
 #include <sys/types.h>
+#include <stdint.h>
 
 void uki__safe_strcpy(char *dst, const char *src, uint32_t buf_size);
 void uki__center_str(char *str, uint32_t size);
@@ -71,6 +72,7 @@ void uki_wait(const char *msg);
 
 #include <sys/types.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 
 typedef bool (*uki_constraint_int32_t)(int32_t);
@@ -127,6 +129,7 @@ int uki_input_scanf_line(const char *msg, const char *fmt, ...);
 #define __UKI_TABLE_H_
 
 #include <sys/types.h>
+#include <stdint.h>
 
 
 typedef struct

@@ -14,6 +14,7 @@
 
 #include <sys/types.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include "uki_defines.h"
 
 typedef bool (*uki_constraint_int32_t)(int32_t);

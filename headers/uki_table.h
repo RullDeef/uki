@@ -8,6 +8,7 @@
 #define __UKI_TABLE_H_
 
 #include <sys/types.h>
+#include <stdint.h>
 #include "uki_defines.h"
 
 typedef struct

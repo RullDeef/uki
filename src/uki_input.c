@@ -11,7 +11,7 @@ static bool imp__read_line(char *line)
     if (fgets(line, UKI_TEMP_STR_BUF_LEN, stdin) == NULL)
         return false;
     
-    while (strlen(line) > 0 && isblank(line[strlen(line) - 1]))
+    while (strlen(line) > 0 && isspace((int)line[strlen(line) - 1]))
         line[strlen(line) - 1] = '\0';
 
     return true;
@@ -27,7 +27,7 @@ bool uki_input_int32(const char *msg, const char *err_msg, int32_t *value)
         long num = strtol(line, &end, 10);
         if (num != 0 || (line != end))
         {
-            if (-2147483648L < num && num < 2147483648L)
+            if (-2147483647L < num && num < 2147483648L)
             {
                 *value = (int32_t)num;
                 return true;

@@ -8,6 +8,7 @@
 #define __UKI_UTILS_H_
 
 #include <sys/types.h>
+#include <stdint.h>
 
 void uki__safe_strcpy(char *dst, const char *src, uint32_t buf_size);
 void uki__center_str(char *str, uint32_t size);
