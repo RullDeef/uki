@@ -1,67 +1,25 @@
 #include <stdio.h>
+
+#define UKI_IMPL
 #include "uki.h"
-
-int test_input(void *data)
-{
-    data = data;
-    int32_t num;
-
-    if (uki_input_int32("Введите число: ", "Неверный ввод!\n", &num))
-        printf("Введено число: %d\n", num);
-    
-    if (uki_input_int32_minmax("Введите число от 10 до 20: ", "Не правильно!\n", 10, 20, &num))
-        printf("Введено число: %d\n", num);
-
-    if (uki_input_int32_force_minmax("Введите число от -50 до 100: ", "Это не то, повтори.\n", -50, 100, &num))
-        printf("Введено число: %d\n", num);
-    
-    float a;
-    unsigned long b;
-    if (uki_input_scanf_line("Введите вещественное и натуральное числа: ", "%f %lu", &a, &b) == 2)
-        printf("a = %f, b = %lu\n", a, b);
-    else
-        printf("bad input\n");
-    
-    char str[200];
-    if (uki_input_str("Строку, пожалуйста: ", "bad str\n", str, 200))
-        printf("str = '%s'\n", str);
-
-    return UKI_OK;
-}
-
-int test_table(void *data)
-{
-    data = data;
-    uki_table_t table = uki_table_create(2, 3,
-        "This is a way too long title ever writen!");
-
-    uki_table_set(&table, 0, 0, "hello");
-    uki_table_set(&table, 0, 1, "dear");
-    uki_table_set(&table, 0, 2, "World!");
-
-    uki_table_set_fmt(&table, 1, 0, "%.8f", 3.1415926525f);
-    uki_table_set(&table, 1, 1, "must be");
-    uki_table_set(&table, 1, 2, "no errors");
-
-    uki_table_print(&table);
-    return UKI_OK;
-}
-
-void test_menu(void)
-{
-    uki_menu_t menu = uki_menu_create("My cool menu!!", 3,
-        "test input", test_input,
-        "test table", test_table,
-        "exit", uki_menu_opt_exit
-    );
-
-    uki_menu_run(&menu, NULL);
-}
 
 int main(void)
 {
-    // test_input();
-    // test_table();
-    test_menu();
+    uki_init();
+
+    int rows = 5;
+    int cols = 4;
+    uki_table table = uki_table_create(rows, cols);
+
+    uki_table_print(table, stdout);
+
+    int row = 2, col = 2;
+    uki_table_write(table, row, col, "this is string!");
+
+    uki_table_print(table, stdout);
+
+    uki_table_destroy(table);
+
+    uki_destroy();
     return 0;
 }
