@@ -1,24 +1,16 @@
 #include <stdio.h>
+#include "testenv.h"
 
 #define UKI_IMPL
 #include "uki.h"
+
+int test_tables(void);
 
 int main(void)
 {
     uki_init();
 
-    int rows = 5;
-    int cols = 4;
-    uki_table table = uki_table_create(rows, cols);
-
-    uki_table_print(table, stdout);
-
-    int row = 2, col = 2;
-    uki_table_write(table, row, col, "this is string!");
-
-    uki_table_print(table, stdout);
-
-    uki_table_destroy(table);
+    FAST_TEST(test_tables);
 
     uki_destroy();
     return 0;

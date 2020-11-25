@@ -4,10 +4,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-#ifndef UKI_TABLE_STRBUF_SIZE
-#define UKI_TABLE_STRBUF_SIZE 64U
-#endif
-
 #define TABLE_POOL_SIZE (MAX_TABLES_COUNT + 1U)
 
 static struct __uki_table
@@ -18,6 +14,13 @@ static struct __uki_table
     char ***data;
 } tables_pool[TABLE_POOL_SIZE];
 
+static bool pointer_in_table(struct __uki_table table, char *ptr)
+{
+    return (char*)table.data < ptr && ptr < (char*)table.data +
+        (table.rows * sizeof(char **) +
+        table.rows * table.cols * (sizeof(char *) + UKI_TABLE_STRBUF_SIZE));
+}
+
 uki_table uki_table_create(unsigned int rows, unsigned int cols)
 {
     if (rows == 0U || cols == 0U)
@@ -25,7 +28,7 @@ uki_table uki_table_create(unsigned int rows, unsigned int cols)
 
     uki_table id;
     for (id = 1U; id < TABLE_POOL_SIZE; id++)
-        if (tables_pool[id].data == NULL)
+        if (!uki_table_is_valid(id))
             break;
 
     if (id == TABLE_POOL_SIZE)
@@ -54,20 +57,23 @@ uki_table uki_table_create(unsigned int rows, unsigned int cols)
     return id;
 }
 
-void uki_table_destroy(uki_table table)
+void uki_table_destroy(uki_table id)
 {
-    if (tables_pool[table].data != NULL)
+    if (uki_table_is_valid(id))
     {
-        free(tables_pool[table].data);
-        tables_pool[table].data = NULL;
+        for (unsigned int row = 0U; row < tables_pool[id].rows; row++)
+            for (unsigned int col = 0U; col < tables_pool[id].cols; col++)
+                if (!pointer_in_table(tables_pool[id], tables_pool[id].data[row][col]))
+                    free(tables_pool[id].data[row][col]);
+
+        free(tables_pool[id].data);
+        tables_pool[id].data = NULL;
     }
 }
 
-static bool pointer_in_table(struct __uki_table table, char *ptr)
+bool uki_table_is_valid(uki_table id)
 {
-    return (char*)table.data < ptr && ptr < (char*)table.data +
-        (table.rows * sizeof(char **) +
-        table.rows * table.cols * (sizeof(char *) + UKI_TABLE_STRBUF_SIZE));
+    return tables_pool[id].data != NULL;
 }
 
 int uki_table_write(uki_table id, unsigned int row, unsigned int col, const char *str)
@@ -122,4 +128,11 @@ int uki_table_print(uki_table id, FILE *file)
     }
 
     return result;
+}
+
+void uki_table_cleanup(void)
+{
+    for (uki_table id = 1U; id < TABLE_POOL_SIZE; id++)
+        if (uki_table_is_valid(id))
+            uki_table_destroy(id);
 }
