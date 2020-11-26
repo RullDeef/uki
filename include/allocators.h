@@ -1,13 +1,14 @@
 #ifndef __UKI_ALLOCATORS_H_
 #define __UKI_ALLOCATORS_H_
 
-#if defined(UKI_MALLOC) && defined(UKI_FREE)
-#define malloc(size) UKI_MALLOC(size)
-#define free(ptr) UKI_FREE(ptr)
-#elif defined(UKI_MALLOC) || defined(UKI_FREE)
-#error you must define both UKI_MALLOC and UKI_FREE
-#else
+#ifndef UKI_MALLOC
 #include <stdlib.h>
+#define UKI_MALLOC(size) malloc(size)
+#endif
+
+#ifndef UKI_FREE
+#include <stdlib.h>
+#define UKI_FREE(ptr) free(ptr)
 #endif
 
 #endif // __UKI_ALLOCATORS_H_

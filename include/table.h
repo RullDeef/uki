@@ -5,21 +5,18 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#ifndef UKI_TABLE_STRBUF_SIZE
-#define UKI_TABLE_STRBUF_SIZE 64U
-#endif
+#include "defines.h"
 
-#define MAX_TABLES_COUNT 255U
-typedef unsigned int uki_table;
+typedef unsigned int uki_table_t;
 
-uki_table uki_table_create(unsigned int rows, unsigned int cols);
-void uki_table_destroy(uki_table id);
+uki_table_t uki_table_create(unsigned int rows, unsigned int cols);
+void uki_table_destroy(uki_table_t id);
 
-bool uki_table_is_valid(uki_table id);
+bool uki_table_is_valid(uki_table_t id);
 
-int uki_table_write(uki_table id, unsigned int row, unsigned int col, const char *str);
+int uki_table_write(uki_table_t id, unsigned int row, unsigned int col, const char *str);
 
-int uki_table_print(uki_table id, FILE *file);
+int uki_table_print(uki_table_t id, FILE *file);
 
 // frees all allocated tables
 void uki_table_cleanup(void);
