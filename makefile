@@ -2,18 +2,24 @@ CC := gcc
 CFLAGS := -std=c99 -Wall -Werror -pedantic -Wextra -I.
 LFLAGS :=
 
+UKI_SRC := $(shell find ./src -name *.c)
+UKI_HDR := $(shell find ./include -name *.h)
+
 TEST_SRC := $(shell find ./test -name *.c)
 
-.PHONY : build clean test
+.PHONY : build test clean
 
-build :
+build : uki.h
+	@echo "uki.h builded successfuly"
+
+uki.h : $(UKI_HDR) $(UKI_SRC)
 	py -m quom --include_directory include src/uki.c uki.h
 
-test : build ./bin/test.exe
+test : ./bin/test.exe
 	./bin/test.exe
 
-bin/test.exe : $(TEST_SRC)
-	mkdir -p bin; $(CC) $(CFLAGS) -o $@ $^ $(LFLAGS)
+bin/test.exe : $(TEST_SRC) uki.h
+	mkdir -p bin; $(CC) $(CFLAGS) -o $@ $(TEST_SRC) $(LFLAGS)
 
 clean :
 	rm -rf obj bin *.stackdump

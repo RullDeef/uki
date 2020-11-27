@@ -6,6 +6,7 @@
 #define __UKI_IMPL_H_
 
 #include "table.c"
+#include "menu.c"
 
 int uki_init(void)
 {

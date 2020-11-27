@@ -16,4 +16,16 @@
 #define UKI_TABLE_MAX_TABLES_COUNT 255U
 #endif
 
+#ifndef UKI_MENU_INFO_SIZE
+#define UKI_MENU_INFO_SIZE 64U
+#endif
+
+#ifndef UKI_MENU_PROMPT_SIZE
+#define UKI_MENU_PROMPT_SIZE 32U
+#endif
+
+#ifndef UKI_MENU_MAX_MENUS_COUNT
+#define UKI_MENU_MAX_MENUS_COUNT 31U
+#endif
+
 #endif // __UKI_DEFINES_H_
