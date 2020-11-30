@@ -39,8 +39,10 @@
         if (r == 0)                                       \
             printf("subtest " #test_fn ": passed\n");     \
         else                                              \
+        {                                                 \
             printf(#test_fn ": failed %d assertions", r); \
-        __status++;                                       \
+            __status++;                                   \
+        }                                                 \
     }
 
 #endif // __TESTENV_H_
