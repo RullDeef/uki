@@ -195,7 +195,7 @@ int uki_menu_ctx_info_set(uki_menu_t id, const char *info)
 {
     if (info == NULL)
         return -1;
-    
+
     if (!uki_menu_is_valid(id))
         return -2;
 
@@ -232,7 +232,7 @@ int uki_menu_ctx_opt_add(uki_menu_t id, const char *opt_str, void *data)
         result = -4; // TODO: add descriptive error codes
     else
     {
-        (*opt)->opt_str = (char*)(*opt + 1U);
+        (*opt)->opt_str = (char *)(*opt + 1U);
         (*opt)->data = data;
         (*opt)->next = NULL;
 
@@ -249,7 +249,7 @@ int uki_menu_ctx_run(uki_menu_t id, void **data)
 
     if (!uki_menu_is_valid(id))
         return -2;
-    
+
     if (menu_pool[id].type != __UKI_MENU_CTX)
         return -3;
 
@@ -352,7 +352,7 @@ int uki_menu_cmd_run(uki_menu_t id)
 
     printf("%s\n", menu->info);
     for (struct __uki_menu_cmd_opt *opt = menu->opt; opt != NULL; opt = opt->next)
-        printf("    %s\n        %s\n", opt->cmd_str, opt->info ? opt->info : "(?)");
+        printf("    %s\n        %s\n", opt->cmd_str, UKI_DEFAULT(opt->info, "(?)"));
 
     // init curr stack frame
     struct __uki_menu_frame frame;
@@ -404,7 +404,9 @@ int uki_menu_cmd_run(uki_menu_t id)
                 // find command with corresponding name
                 for (struct __uki_menu_cmd_opt *opt = menu->opt; opt != NULL; opt = opt->next)
                 {
-                    if (strcmp(argv[0], opt->cmd_str) == 0) // TODO: check only first word in cmd_str
+                    char *space = strchr(opt->cmd_str, ' ');
+                    if ((space != NULL && strncmp(argv[0], opt->cmd_str, space - opt->cmd_str) == 0) ||
+                        strcmp(argv[0], opt->cmd_str) == 0)
                     {
                         result = opt->func(argc, argv);
                         if (result != 0)

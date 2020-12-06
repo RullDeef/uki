@@ -3,6 +3,7 @@
 
 #define UKI_MIN(a, b) ((a) < (b) ? (a) : (b))
 #define UKI_MAX(a, b) ((a) > (b) ? (a) : (b))
+#define UKI_DEFAULT(a, b) ((a) ? (a) : (b))
 
 #ifndef UKI_TABLE_PRINT_MAX_WIDTH
 #define UKI_TABLE_PRINT_MAX_WIDTH 80U
