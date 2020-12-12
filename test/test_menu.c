@@ -42,6 +42,7 @@ BEGIN_TEST(test_cmd)
     uki_menu_cmd_info_set(menu, "This is simple command menu.");
 
     uki_menu_cmd_opt_add(menu, "exit", uki_default_cmd_exit, NULL);
+    uki_menu_cmd_opt_add(menu, "help", uki_default_cmd_help, NULL);
 
     uki_menu_cmd_run(menu);
 

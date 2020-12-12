@@ -423,6 +423,20 @@ int uki_menu_cmd_run(uki_menu_t id)
     return result;
 }
 
+int uki_default_cmd_help(int argc, const char **argv)
+{
+    (void)argc;
+    (void)argv;
+
+    struct __uki_menu_cmd *menu = (struct __uki_menu_cmd *)menu_pool[menu_frame->menu_id].ptr;
+
+    printf("%s\n", menu->info);
+    for (struct __uki_menu_cmd_opt *opt = menu->opt; opt != NULL; opt = opt->next)
+        printf("    %s\n        %s\n", opt->cmd_str, UKI_DEFAULT(opt->info, "(?)"));
+
+    return 0;
+}
+
 int uki_default_cmd_exit(int argc, const char **argv)
 {
     (void)argc;

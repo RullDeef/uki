@@ -22,6 +22,7 @@ int uki_menu_cmd_run(uki_menu_t id);
 
 // TODO: get_menu_data - retrive custom data from menu call in any opt. func inside
 
+int uki_default_cmd_help(int argc, const char **argv);
 int uki_default_cmd_exit(int argc, const char **argv);
 
 // frees all(!) allocated menus
