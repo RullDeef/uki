@@ -16,6 +16,7 @@ int uki_init(void)
 void uki_destroy(void)
 {
     uki_table_cleanup();
+    uki_menu_cleanup();
 }
 
 #endif // __UKI_IMPL_H_
